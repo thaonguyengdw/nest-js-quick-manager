@@ -14,7 +14,6 @@ export class QuestionController {
   @UsePipes(ValidationPipe)
   async saveQuestion(@Body() question: CreateQuestionDto): Promise<Question> {
     const quiz = await this.quizService.getQuizById(question.quizId);
-    console.log('111', quiz);
     return await this.questionService.createQuestion(question, quiz);
   }
 }

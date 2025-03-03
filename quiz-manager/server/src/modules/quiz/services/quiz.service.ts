@@ -10,14 +10,18 @@ export class QuizService {
   constructor(
     @InjectRepository(Quiz) private quizRepository: Repository<Quiz>,
   ) {}
-  getAllQuiz() {
-    return [1, 2, 3, 4, 'from the service'];
+  async getAllQuiz(): Promise<Quiz[]> {
+    return await this.quizRepository
+      .createQueryBuilder('q')
+      .leftJoinAndSelect('q.questions', 'qt')
+      .leftJoinAndSelect('qt.options', 'o')
+      .getMany();
   }
 
   async getQuizById(id: number): Promise<Quiz> {
     return await this.quizRepository.findOne({
       where: { id },
-      relations: ['questions'], // Specify the related entity here
+      relations: ['questions', 'questions.options'], // Specify the related entity here
     });
   }
 

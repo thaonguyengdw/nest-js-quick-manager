@@ -17,8 +17,8 @@ export class QuizController {
   constructor(private quizService: QuizService) {}
 
   @Get('/')
-  getAllQuiz() {
-    return this.quizService.getAllQuiz();
+  async getAllQuizzes(): Promise<Quiz[]> {
+    return await this.quizService.getAllQuiz();
   }
   /**
    * The ParseIntPipe ensures that the id is converted to an integer
